@@ -9,7 +9,6 @@ namespace Orleans.TestKit.Streams
     public class TestStreamProvider : IStreamProviderImpl
     {
         private readonly TestKitOptions _options;
-
         private readonly Dictionary<TestStreamId, IStreamIdentity> _streams = new Dictionary<TestStreamId, IStreamIdentity>();
 
         public TestStreamProvider(TestKitOptions options)

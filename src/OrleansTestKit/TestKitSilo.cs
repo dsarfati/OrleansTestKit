@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Threading.Tasks;
 using Moq;
 using Orleans.Core;
 using Orleans.Runtime;
@@ -46,8 +45,7 @@ namespace Orleans.TestKit
         public T CreateGrain<T>(long id) where T : Grain, IGrainWithIntegerKey
             => CreateGrain<T>(new TestGrainIdentity(id));
 
-        public T CreateGrain<T>(Guid id) where T : Grain, IGrainWithGuidKey
-            => CreateGrain<T>(new TestGrainIdentity(id));
+        public T CreateGrain<T>(Guid id) where T : Grain, IGrainWithGuidKey => CreateGrain<T>(new TestGrainIdentity(id));
 
         public T CreateGrain<T>(string id) where T : Grain, IGrainWithStringKey
             => CreateGrain<T>(new TestGrainIdentity(id));
@@ -97,12 +95,13 @@ namespace Orleans.TestKit
             }
 
             //Emulate the grain's lifecycle
-            grain.OnActivateAsync().Wait(1000);
+            grain.OnActivateAsync();
 
             return grain as T;
+
         }
 
-        private static PropertyInfo GetProperty(Type t, string name)
+        private PropertyInfo GetProperty(Type t, string name)
         {
             var info = t.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -158,14 +157,5 @@ namespace Orleans.TestKit
             _grainStateManager.GetState<TState>(grain);
 
         #endregion
-
-        /// <summary>
-        /// Deactivate the given <see cref="Grain"/>
-        /// </summary>
-        /// <param name="grain">Grain to Deactivate</param>
-        public void Deactivate(Grain grain)
-        {
-            grain.OnDeactivateAsync().Wait(1000);
-        }
     }
 }

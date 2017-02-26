@@ -20,7 +20,7 @@ namespace Orleans.TestKit.Tests
         [Fact]
         public async Task SetupProbe()
         {
-            var grain = Silo.CreateGrain<PingGrain>(1);
+            IPing grain = Silo.CreateGrain<PingGrain>(1);
 
             var pong = Silo.AddProbe<IPong>(22);
 
@@ -30,7 +30,7 @@ namespace Orleans.TestKit.Tests
         }
 
         [Fact]
-        public async Task MissingProbe()
+        public void MissingProbe()
         {
             IPing grain = Silo.CreateGrain<PingGrain>(1);
 
@@ -38,7 +38,7 @@ namespace Orleans.TestKit.Tests
         }
 
         [Fact]
-        public async Task InvalidProbe()
+        public void InvalidProbe()
         {
             IPing grain = Silo.CreateGrain<PingGrain>(1);
 
@@ -51,7 +51,7 @@ namespace Orleans.TestKit.Tests
         }
 
         [Fact]
-        public async Task InvalidProbeType()
+        public void InvalidProbeType()
         {
             IPing grain = Silo.CreateGrain<PingGrain>(1);
 
